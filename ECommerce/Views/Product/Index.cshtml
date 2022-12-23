@@ -1,0 +1,174 @@
+﻿@model List<FilterTagViewModel>
+
+@{
+	var products = ViewData["Products"] as List<ProductViewModel>;
+	var categories = ViewData["Categories"] as List<CategoryViewModel>;
+}
+
+
+<div class="category">
+
+	<div class="container">
+
+		<div class="category-item-container has-scrollbar">
+
+			<div class="category-item">
+
+				<div class="category-img-box">
+					<img src="~/images/icons/bag.svg" width="30">
+				</div>
+
+				<div class="category-content-box">
+
+					<div class="category-content-flex">
+						<h3 class="category-item-title">All</h3>
+
+						<p class="category-item-amount">(8)</p>
+					</div>
+
+					<a class="category-btn" asp-action="FilterOnCategory" asp-route-categoryId="0">Show all</a>
+
+				</div>
+
+			</div>
+
+			@foreach (var item in categories)
+			{
+				<div class="category-item">
+
+					<div class="category-img-box">
+						<img src="~/images/icons/@item.ImageUrl" width="30">
+					</div>
+
+					<div class="category-content-box">
+
+						<div class="category-content-flex">
+							<h3 class="category-item-title">@item.Name</h3>
+
+							<p class="category-item-amount">(5)</p>
+						</div>
+
+						<a class="category-btn" asp-action="FilterOnCategory" asp-route-categoryId="@item.Id">Show all</a>
+
+					</div>
+
+				</div>
+			}
+
+		</div>
+
+	</div>
+
+</div>
+
+<div class="product-container">
+	<div class="container">
+
+		<div class="sidebar  has-scrollbar" style="padding: 5px 0 0 0" data-mobile-menu>
+
+			<div class="sidebar-category">
+
+				<div class="sidebar-top">
+					<h2 class="sidebar-title">Tags</h2>
+
+					<button class="sidebar-close-btn" data-mobile-menu-close-btn>
+						<ion-icon name="close-outline"></ion-icon>
+					</button>
+				</div>
+
+				<ul class="sidebar-menu-category-list">
+					<form asp-controller="Product" asp-action="FilterOnTags" method="get">
+						@for (int i = 0; i < @Model.Count; i++)
+						{
+						<li class="sidebar-menu-category">
+
+							<div class="sidebar-accordion-menu">
+
+								<div class="menu-title-flex">
+									<p class="menu-title">@Model[i].Title</p>
+								</div>
+
+								<div>
+									<input type="hidden" asp-for="@Model[i].Id">
+									<input type="hidden" asp-for="@Model[i].Title">
+									<input type="checkbox" asp-for="@Model[i].Checked">
+								</div>
+
+							</div>
+
+						</li>
+						}
+					<input type="hidden" name="categoryId" value="@ViewBag.CurrentCategory" />
+					<button class="btn-newsletter" style="width: 100%; margin: 10px 0 0 0;">Filter</button>
+					</form>
+				</ul>
+
+			</div>
+
+		</div>
+
+		<div class="product-box">
+			<div class="product-main">
+
+				<h2 class="title">Products</h2>
+
+				<div class="product-grid">
+
+					@foreach (var item in products)
+					{
+						<div class="showcase">
+
+							<div class="showcase-banner">
+
+								<img src="~/images/products/@item.ImageUrl" width="300" class="product-img default">
+								<img src="~/images/products/@item.ImageUrl" width="300" class="product-img hover">
+
+								<p class="showcase-badge">%</p>
+
+								<div class="showcase-actions">
+
+									<button class="btn-action">
+										<ion-icon name="heart-outline"></ion-icon>
+									</button>
+
+									<button class="btn-action">
+										<ion-icon name="eye-outline"></ion-icon>
+									</button>
+
+									<a asp-controller="Basket" asp-action="AddProduct" asp-route-id="@item.Id" asp-route-returnUrl="@ViewBag.ReturnUrl" class="btn-action">
+										<ion-icon name="bag-add-outline"></ion-icon>
+									</a>
+
+								</div>
+
+							</div>
+
+							<div class="showcase-content">
+
+								<a href="#" class="showcase-category">@item.CategoryName</a>
+
+								<a href="#">
+									<h3 class="showcase-title"><b>@item.Name</b></h3>
+								</a>
+
+								<a href="#">
+									<h3 class="showcase-title">@item.Description</h3>
+								</a>
+
+								<div class="price-box">
+									<p class="price">$@(string.Format("{0:00.00}", item.Price))</p>
+									<del>$@(string.Format("{0:00.00}", item.Price + Random.Shared.Next(1, 20)))</del>
+								</div>
+
+							</div>
+
+						</div>
+					}
+
+				</div>
+
+			</div>
+		</div>
+
+	</div>
+</div>

@@ -1,0 +1,44 @@
+﻿@model CreateProductViewModel
+
+@{
+	var categories = ViewData["Categories"] as List<SelectListItem>;
+	var tags = ViewData["Tags"] as List<SelectListItem>;
+}
+
+<link href="~/css/CreateCategoryProductStyle.css" rel="stylesheet">
+
+<div class="box" style="height:800px; margin-top: 30px;">
+    <div class="form">
+        <form asp-controller="Product" asp-action="Create" enctype="multipart/form-data" method="post">
+
+            <div class="input-box">
+                <input type="text" asp-for="Name" required="required"  />
+                <span class="custom-placeholder">Product Name</span>
+                <i></i>
+            </div>
+
+            <div class="input-box">
+                <input type="text" asp-for="Description" required="required"  />
+                <span class="custom-placeholder">Description</span>
+                <i></i>
+            </div>
+
+            <div class="input-box">
+                <input type="text" asp-for="Price" required="required"  />
+                <span class="custom-placeholder">Price</span>
+                <i></i>
+            </div>
+
+            <input type="file" asp-for="Image" style="margin-top: 50px;"/><br />
+            <span asp-validation-for="Image" class="text-danger"></span>
+
+            <select asp-for="tagIds" asp-items="tags" multiple search="true" style="margin-top: 20px; display: block;"></select><br />
+
+		    <select class="single-select" asp-for="CategoryId" asp-items="categories"></select><br />
+            <span asp-validation-for="CategoryId" class="text-danger"></span>
+
+            <input type="submit" value="Add" style="margin-top: 40px;"/>
+        </form>
+    </div>
+</div>
+<script src="~/css/multiselect-dropdown.js" ></script>

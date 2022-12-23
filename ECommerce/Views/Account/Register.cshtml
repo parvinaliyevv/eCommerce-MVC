@@ -1,0 +1,55 @@
+﻿@model RegisterViewModel
+
+@{
+    Layout = null;
+}
+
+<link href="~/css/LogRegStyle.css" rel="stylesheet">
+
+<div class="box">
+    <div class="form">
+        <form asp-action="Register" method="post">
+            <h2>Register</h2>
+
+            <div asp-validation-summary="All" style="color:red;"></div>
+
+            <div class="input-box">
+                <input type="text" asp-for="Name" required="required"  />
+                <span class="custom-placeholder">Name</span>
+                <i></i>
+                <span asp-validation-for="Name"></span>
+            </div>
+            <div class="input-box">
+                <input type="text" asp-for="Surname" required="required"  />
+                <span class="custom-placeholder">Surname</span>
+                <i></i>
+                <span asp-validation-for="Surname"></span>
+            </div>
+            <div class="input-box">
+                <input type="text" asp-for="Email" required="required"  />
+                <span class="custom-placeholder">Email</span>
+                <i></i>
+                <span asp-validation-for="Email"></span>
+            </div>
+            <div class="input-box">
+                <input type="password" asp-for="Password" required="required"  />
+                <span class="custom-placeholder">Password</span>
+                <i></i>
+                <span asp-validation-for="Password"></span>
+            </div>
+            <div class="input-box">
+                <input type="password" asp-for="ConfirmPassword" required="required"/>
+                <span class="custom-placeholder">ConfirmPassword</span>
+                <i></i>
+                <span asp-validation-for="ConfirmPassword"></span>
+            </div>
+
+            <div class="links">
+                <a href="#">Have Account?</a>
+                <a asp-action="Login" asp-controller="Account">Login</a>
+            </div>
+
+            <input type="submit" value="Register" />
+        </form>
+    </div>
+</div>
